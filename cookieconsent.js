@@ -1266,24 +1266,27 @@ var cc =
     }
 }
 
-if (!(window.jQuery)) {
-    var s = document.createElement('script');
-    s.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
-    s.setAttribute('type', 'text/javascript');
-    document.getElementsByTagName('head')[0].appendChild(s);
-    if (window.onload != null) {
-        var oldOnload = window.onload;
-        window.onload = function (e) {
-            oldOnload(e);
-            cc.onfirstload();
-        };
+(function(){
+    if(!(window.jQuery)) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+        s.setAttribute('type', 'text/javascript');
+        document.getElementsByTagName('head')[0].appendChild(s);
+        if ( window.onload != null ) {
+            var oldOnload = window.onload;
+            window.onload = function (e) {
+                oldOnload(e);
+                cc.onfirstload();
+            };
+        }
+        else
+        {
+            window.onload = cc.onfirstload;
+        }
+    } else {
+        jQuery(document).ready(cc.onfirstload);
     }
-    else {
-        window.onload = cc.onfirstload;
-    }
-} else {
-    jQuery(document).ready(cc.onfirstload);
-}
+})();
 
 /**
  * jQuery.browser.mobile (http://detectmobilebrowser.com/)
